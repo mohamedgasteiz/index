@@ -1,1 +1,2 @@
-
+ RewriteEngine On
+RewriteRule ^repository/(.*)$ https://mohamedgasteiz.github.io/$1 [R=301,L]
