@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 60%;
+    margin: 50px auto;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h2, h3 {
+    color: red;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+}
+
+th {
+    background: aqua;
+    color: black;
+}
+
+input {
+    width: 100%;
+    padding: 8px;
+    border: 2px solid #007bff;
+    border-radius: 5px;
+    font-size: 16px;
+    text-align: center;
+    outline: none;
+    transition: 0.3s;
+}
+
+input:focus {
+    border-color: #0056b3;
+    box-shadow: 0 0 8px rgba(0, 91, 187, 0.5);
+};
+}
+
+button {
+    background: #28a745;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    margin: 5px;
+    border-radius: 5px;
+}
+
+button:hover {
+    background: #218838;
+}
+    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>حساب المعدل الفصلي</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; direction: rtl; }
+        table { width: 80%; margin: 20px auto; border-collapse: collapse; }
+        th, td { border: 1px solid black; padding: 10px; text-align: center; }
+        th { background-color: #f4f4f4; }
+        input { width: 50px; text-align: center; }
+        button { margin-top: 10px; padding: 10px; cursor: pointer; }
+    </style>
+</head>
+<body>
+<h1>مرحبا بكم في صفحتي لحساب المعدل</h1>
+    <h2>حساب المعدل الفصلي</h2>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>المادة</th>
+                <th>الفرض</th>
+                <th>التقويم</th>
+                <th>الاختبار</th>
+                <th>المعامل</th>
+                <th>معدل المادة</th>
+            </tr>
+        </thead>
+        <tbody id="gradesTable">
+            <!-- سيتم ملء الجدول ديناميكيا -->
+        </tbody>
+    </table>
+
+    <button onclick="calculateAverage()">حساب المعدل الفصلي</button>
+    
+    <h3 id="finalAverage">المعدل الفصلي: --</h3>
+
+    <script>
+        // أسماء المواد
+        const subjects = ["رياضيات", "فيزياء", "اعلام الي", "علوم طبيعية", "عربية", "فرنسية", "إنجليزية","اجتماعيات", "تكنولوجيا", "تربية إسلامية", "تربية بدنية"];
+
+        // إنشاء الجدول تلقائيًا
+        const tableBody = document.getElementById("gradesTable");
+
+        subjects.forEach(subject => {
+            let row = document.createElement("tr");
+            row.innerHTML = `
+                <td>${subject}</td>
+                <td><input type="number" min="0" max="20" class="grade"></td>
+                <td><input type="number" min="0" max="20" class="grade"></td>
+                <td><input type="number" min="0" max="20" class="grade"></td>
+                <td><input type="number" min="1" class="coefficient"></td>
+                <td class="subjectAverage">--</td>
+            `;
+            tableBody.appendChild(row);
+        });
+
+        function calculateAverage() {
+            let totalWeightedSum = 0;
+            let totalCoefficient = 0;
+
+            document.querySelectorAll("#gradesTable tr").forEach(row => {
+                let grades = row.querySelectorAll(".grade");
+                let coefficient = row.querySelector(".coefficient").value;
+
+                let test = parseFloat(grades[2].value) || 0;
+                let assessment = parseFloat(grades[1].value) || 0;
+                let assignment = parseFloat(grades[0].value) || 0;
+                coefficient = parseFloat(coefficient) || 1;
+
+                let subjectAverage = ((assignment + assessment + 2 * test) / 4) * coefficient;
+                row.querySelector(".subjectAverage").innerText = subjectAverage.toFixed(2);
+
+                totalWeightedSum += subjectAverage;
+                totalCoefficient += coefficient;
+            });
+
+            let finalAverage = totalWeightedSum / totalCoefficient;
+            document.getElementById("finalAverage").innerText = "المعدل الفصلي: " + finalAverage.toFixed(2);
+        }
+    </script>
+    <center>
+
+Mohamed Nassereddine Hamouda 
+<br>
+All rights saved - 2025
+</center>
+</body>
+</html>
+
